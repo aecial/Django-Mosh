@@ -1,0 +1,11 @@
+{% extends 'main.html'%} {% block content %} {% if username %}
+<h1>Hello {{username}}</h1>
+{% endif %}
+<h1>Home</h1>
+{% if rooms%} {% for room in rooms %}
+<div>
+  <a href="/room/{{room.id}}" class="underline">
+    <h3>{{room.id}} -- {{room.name}}</h3>
+  </a>
+</div>
+{% endfor %} {%endif%} {% endblock %}
