@@ -14,5 +14,9 @@ def romr(request):
     return render(request, 'base/home.html', context)
 #pk for dynamic route
 def room(request, pk):
-    context = {'id': pk}
+    # Check for the room number
+    for room in rooms:
+       if room['id'] == int(pk):
+           myRoom = room                
+    context = {'id' : myRoom}     
     return render(request, 'base/room.html', context)
