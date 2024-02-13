@@ -2,11 +2,14 @@
 <h1>Hello {{username}}</h1>
 {% endif %}
 <h1>Home</h1>
+<a class="text-black bg-white" href="{% url 'create-room' %}">Create Room</a>
 {% if rooms%} {% for room in rooms %}
 <div>
   <hr />
+
+  {% comment %} can access deeper attributes because of the relationship {%
+  endcomment %} {% comment %} use url name which is the 'room' {% endcomment %}
   <span>@{{room.host.username}}</span>
-  {% comment %} use url name which is the 'room' {% endcomment %}
   <a href="{% url 'room' room.id %}" class="underline">
     <h3>{{room.id}} -- {{room.name}}</h3>
   </a>
