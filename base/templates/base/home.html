@@ -6,7 +6,7 @@
 {% if rooms%} {% for room in rooms %}
 <div>
   <hr />
-
+  <a href="{% url 'update-room' room.id %}">Edit</a>
   {% comment %} can access deeper attributes because of the relationship {%
   endcomment %} {% comment %} use url name which is the 'room' {% endcomment %}
   <span>@{{room.host.username}}</span>
