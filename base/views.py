@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import Room
+from .models import Room, Category
 from .forms import RoomForm
 # Create your views here.
 # rooms =[
@@ -50,3 +50,8 @@ def deleteRoom(request, pk):
         room.delete()
         return redirect('home')
     return render(request, 'base/delete.html', {'obj': room})
+
+def test(request):
+    category = Category.objects.all
+    context  = {'category': category}
+    return render(request, 'base/testPage.html', context)

@@ -1,0 +1,5 @@
+{% extends "main.html" %} {% block content %}
+<h1 class="text-center">CATEGORIES</h1>
+{% for item in category %}
+<div class="text-white">{{item.name}}</div>
+{% endfor %} {% endblock content %}
