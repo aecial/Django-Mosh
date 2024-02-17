@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.http import JsonResponse
-from .models import Room, Category
+from .models import Room, Category, Topic
 from .forms import RoomForm
 # Create your views here.
 # rooms =[
@@ -12,8 +13,15 @@ def say_hello(request):
     return JsonResponse({'message': 'I am Ted'})
 def romr(request):
     # ORM To get all
-    rooms = Room.objects.all()
-    context = {'rooms': rooms}
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    # topic__name__icontains = not case sensitive and returns if a value in q matches with the letters
+    # in the topic; topic__name_contains = case sesitive
+    # search room if a character is contained in topic or in name or in description
+    # using the Q Lookup Method
+    rooms = Room.objects.filter(Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q)) 
+    room_count = rooms.count()
+    topics = Topic.objects.all()
+    context = {'rooms': rooms, 'topics': topics, 'room_count': room_count}
     return render(request, 'base/home.html', context)
 #pk for dynamic route
 def room(request, pk):

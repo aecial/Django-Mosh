@@ -1,7 +1,25 @@
 {% extends 'main.html'%} {% block content %} {% if username %}
 <h1>Hello {{username}}</h1>
 {% endif %}
-<h1>Home</h1>
+<div>
+  <hr />
+  <h3>Browse Topics</h3>
+  <div>
+    <div>
+      <a href="{% url 'home' %}">All</a>
+    </div>
+    {% for topic in topics%}
+    <div>
+      <a href="{% url 'home' %}?q={{topic.name}}">{{topic}}</a>
+    </div>
+    {% endfor %}
+  </div>
+  <hr />
+</div>
+<h5>
+  {{room_count}} {% if room_count > 1 %} rooms available {%else %} room
+  available {% endif %}
+</h5>
 <a class="text-black bg-white" href="{% url 'create-room' %}">Create Room</a>
 {% if rooms%} {% for room in rooms %}
 <div>
