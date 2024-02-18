@@ -1,0 +1,32 @@
+{% extends 'main.html' %} {% block content %}
+<div>
+  <form action="" method="post" class="text-white flex flex-col gap-4">
+    {% csrf_token %}
+    <div class="w-[50%] mx-auto">
+      <label for="username">Enter Username: </label>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        class="text-black"
+        placeholder="Enter Username"
+      />
+    </div>
+    <div class="w-[50%] mx-auto">
+      <label for="password">Enter Password: </label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        class="text-black"
+        placeholder="Enter Password"
+      />
+    </div>
+    <input
+      type="submit"
+      value="Log In"
+      class="border border-white p-1 w-[50%] mx-auto"
+    />
+  </form>
+</div>
+{% endblock content %}
