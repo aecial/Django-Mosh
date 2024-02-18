@@ -24,10 +24,12 @@
 {% if rooms%} {% for room in rooms %}
 <div>
   <hr />
-  <a href="{% url 'update-room' room.id %}">Edit</a>
+  {% if request.user == room.host %}
+  <a href="{% url 'update-room' room.id %}" class="text-blue-500">Edit</a>
   <a href="{% url 'delete-room' room.id %}" class="text-red-500">Delete</a>
-  {% comment %} can access deeper attributes because of the relationship {%
-  endcomment %} {% comment %} use url name which is the 'room' {% endcomment %}
+  {% endif %} {% comment %} can access deeper attributes because of the
+  relationship {% endcomment %} {% comment %} use url name which is the 'room'
+  {% endcomment %}
   <span>@{{room.host.username}}</span>
   <a href="{% url 'room' room.id %}" class="underline">
     <h3>{{room.id}} -- {{room.name}}</h3>
