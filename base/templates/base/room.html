@@ -1,5 +1,23 @@
 {% extends 'main.html'%} {% block content %} {% if information%}
 <h1>Room Name: {{information}}</h1>
-{% else %}
+{{information.description}} {% else %}
 <h1>Room</h1>
+{% endif %} {% for room_message in room_messages %}
+<div class="border border-blue-500 mb-2">
+  <small>@{{room_message.user}} {{room_message.created|timesince}} ago</small>
+  <hr />
+  <p>{{room_message.body}}</p>
+</div>
+{% endfor %} {% if request.user.is_authenticated %}
+<div>
+  <form action="" method="post">
+    {% csrf_token %}
+    <input
+      type="text"
+      name="body"
+      placeholder="Write your message here..."
+      class="text-black"
+    />
+  </form>
+</div>
 {% endif %} {% endblock %}
