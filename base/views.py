@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import JsonResponse
 from .models import Room, Category, Topic, Message
-from .forms import RoomForm
+from .forms import RoomForm, MessageForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -142,7 +142,21 @@ def deleteMessage(request, pk):
         return redirect('home')
     return render(request, 'base/delete.html', {'obj': message})
 
+@login_required(login_url='login')
+def updateMessage(request, pk):
+    message = Message.objects.get(id=pk)
+    form = MessageForm(instance=message)
 
+    if request.user != message.user:
+        return HttpResponse('You are not allowed here!')
+    if request.method == 'POST':
+        # pass the instance to update only
+        form = MessageForm(request.POST, instance=message)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    context = {'form': form}
+    return render(request, 'base/room_form.html', context)
 
 
 
