@@ -1,40 +1,26 @@
 {% extends 'main.html'%} {% block content %} {% if username %}
 <h1>Hello {{username}}</h1>
 {% endif %}
-<div>
-  <hr />
-  <h3>Browse Topics</h3>
-  <div>
-    <div>
-      <a href="{% url 'home' %}">All</a>
-    </div>
-    {% for topic in topics%}
-    <div>
-      <a href="{% url 'home' %}?q={{topic.name}}">{{topic}}</a>
-    </div>
-    {% endfor %}
+<div class="grid grid-cols-3">
+  <!-- 1st Grid -->
+  <div class="h-screen border border-white">
+    {% include 'base/topics_component.html'%}
   </div>
-  <hr />
+  <!-- 2nd Grid -->
+  <div class="flex flex-col border border-white">
+    <h5>
+      {{room_count}} {% if room_count > 1 %} rooms available {%else %} room
+      available {% endif %}
+    </h5>
+    <a class="text-black bg-white w-40" href="{% url 'create-room' %}"
+      >Create Room</a
+    >
+    {% include 'base/feed_component.html'%}
+  </div>
+  <!-- 3rd Grid -->
+  <div class="border border-white">
+    {% include 'base/activity_component.html' %}
+  </div>
 </div>
-<h5>
-  {{room_count}} {% if room_count > 1 %} rooms available {%else %} room
-  available {% endif %}
-</h5>
-<a class="text-black bg-white" href="{% url 'create-room' %}">Create Room</a>
-{% if rooms%} {% for room in rooms %}
-<div>
-  <hr />
-  {% if request.user == room.host %}
-  <a href="{% url 'update-room' room.id %}" class="text-blue-500">Edit</a>
-  <a href="{% url 'delete-room' room.id %}" class="text-red-500">Delete</a>
-  {% endif %} {% comment %} can access deeper attributes because of the
-  relationship {% endcomment %} {% comment %} use url name which is the 'room'
-  {% endcomment %}
-  <span>@{{room.host.username}}</span>
-  <a href="{% url 'room' room.id %}" class="underline">
-    <h3>{{room.id}} -- {{room.name}}</h3>
-  </a>
-  <small>{{room.topic.name}}</small>
-  <hr />
-</div>
-{% endfor %} {%endif%} {% endblock %}
+
+{% endblock %}
