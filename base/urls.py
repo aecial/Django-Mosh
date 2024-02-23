@@ -4,6 +4,7 @@ urlpatterns = [
     
     path('', views.romr, name='home'),
     path('room/<str:pk>/', views.room, name='room'),
+     path('profile/<str:pk>/', views.userProfile, name='profile'),
     path('create-room/', views.createRoom, name='create-room'),
     path('update-room/<str:pk>/ ', views.updateRoom, name='update-room'),
     path('update-message/<str:pk>/ ', views.updateMessage, name='update-message'),
