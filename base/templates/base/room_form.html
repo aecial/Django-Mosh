@@ -1,7 +1,11 @@
 {% extends "main.html" %} {% block content %}
 <div>
-  <form method="POST" action="" class="text-black bg-white">
-    {% csrf_token %} {{form.as_p}}
+  <form method="POST" action="" class="text-white bg-black">
+    {% csrf_token %} {% for field in form %}
+    <label class="text-red-500" for="{{ field.auto_id }}"
+      >{{ field.label }}</label
+    >
+    {{ field }} {% endfor %}
     <input type="submit" value="Submit" />
   </form>
 </div>
