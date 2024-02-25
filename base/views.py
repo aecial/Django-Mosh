@@ -103,12 +103,19 @@ def userProfile(request, pk):
 @login_required(login_url='login')
 def createRoom(request):
     form = RoomForm()
+    topics = Topic.objects.all()
     if request.method == 'POST':
-        form = RoomForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    context = {'form': form}
+        topic_name = request.POST.get('topic')
+        # if we can't find it, we create it
+        topic, created = Topic.objects.get_or_create(name=topic_name)
+        Room.objects.create(
+            host = request.user,
+            name = request.POST.get('name'),
+            description = request.POST.get('description'),
+
+        )
+        return redirect('home')
+    context = {'form': form, 'topics': topics}
     return render(request, 'base/room_form.html', context)
 
 @login_required(login_url='login')
