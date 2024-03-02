@@ -1,7 +1,6 @@
 from django.forms import ModelForm, widgets
-from .models import Room, Message
+from .models import Room, Message, User
 from django import forms
-from django.contrib.auth.models import User
 class RoomForm(ModelForm):
     class Meta:
         model = Room
